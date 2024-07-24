@@ -52,6 +52,7 @@ public class StandardDeviationController implements Initializable {
     public StandardDeviationController() {
         this.calculator = new StandardDeviationCalculator();
     }
+
     /**
      * @param url
      * @param resourceBundle
@@ -89,7 +90,7 @@ public class StandardDeviationController implements Initializable {
                 invalidDataPointLabel.setText("[" + currentValue + "] has been added to the data points");
                 updateCurrentPoints();
             } catch (NumberFormatException exception2) {
-                invalidDataPointLabel.setText("Please Enter a valid Data Point");
+                invalidDataPointLabel.setText("Please enter a valid Data Point (numerical values)!");
                 invalidDataPointLabel.setVisible(true);
             }
         }

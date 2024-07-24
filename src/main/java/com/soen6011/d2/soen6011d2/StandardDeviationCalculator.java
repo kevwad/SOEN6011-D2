@@ -8,30 +8,50 @@ import java.util.List;
 
 public class StandardDeviationCalculator {
 
+    /**
+     * container for the list of data points.
+     */
     private List<Double> dataPoints;
 
     public StandardDeviationCalculator() {
         dataPoints = new ArrayList<>();
     }
 
+    /**
+     * Adds the value to the private list
+     * @param value value to be added
+     */
     public void addDataPoint(double value) {
         dataPoints.add(value);
     }
 
+    /**
+     * adds a list of data points to the private list
+     * @param values set of data points to be added
+     */
     public void addDataPoints(double[] values) {
         for (double value : values) {
             dataPoints.add(value);
         }
     }
 
+    /**
+     * @return true if more than 1 data points, else false
+     */
     public boolean hasEnoughDataPoints() {
         return dataPoints.size() > 1;
     }
 
+    /**
+     * @return number of data points
+     */
     public int numberOfDataPoints() {
         return dataPoints.size();
     }
 
+    /**
+     * @return Generates the list of comma separated data points.
+     */
     public String currentDataPoints() {
         if (dataPoints.isEmpty()) {
             return "-";
@@ -66,7 +86,8 @@ public class StandardDeviationCalculator {
     }
 
     /**
-     * @return Returns the sample standard deviation
+     * Returns the sample standard deviation
+     * @return sample standard deviation
      */
     public double calculateSampleStandardDeviation() {
         if (dataPoints.size() < 2) {
@@ -88,7 +109,8 @@ public class StandardDeviationCalculator {
     }
 
     /**
-     * @return Calculates the mean which will be used to calculate the standard deviation
+     * Calculates the mean which will be used to calculate the standard deviation
+     * @return mean of the data points
      */
     private double calculateMean() {
         double sum = 0.0;

@@ -22,9 +22,6 @@ public class StandardDeviationController implements Initializable {
 
     private StandardDeviationCalculator calculator;
 
-//    @FXML
-//    private Label dataPointAddedLabel;
-
     @FXML
     private Label invalidDataPointLabel;
 
@@ -63,6 +60,9 @@ public class StandardDeviationController implements Initializable {
         sampleStdDevLabel.setVisible(false);
     }
 
+    /**
+     * We try to extract the double value or the value(s) which are then added to th list.
+     */
     @FXML
     protected void onAddDataPointClick() {
         invalidDataPointLabel.setVisible(true);
@@ -97,6 +97,9 @@ public class StandardDeviationController implements Initializable {
         inputField.clear();
     }
 
+    /**
+     * Clears the data points from the list and hides any error messages
+     */
     @FXML
     protected void onClearDataPointClick() {
         calculator.clearData();
@@ -106,6 +109,9 @@ public class StandardDeviationController implements Initializable {
         updateCurrentPoints();
     }
 
+    /**
+     * Updates the Message based on number of data points
+     */
     private void updateCurrentPoints() {
         if (calculator.numberOfDataPoints() > 0) {
             dataPointsLabel.setText("Current Data Points are: [" + calculator.currentDataPoints() + "]");
@@ -114,6 +120,9 @@ public class StandardDeviationController implements Initializable {
         }
     }
 
+    /**
+     * When user clicks on Submit, calculate the standard deviation and display them at the bottom
+     */
     @FXML
     protected void onSubmitDataPoints() {
         if (!calculator.hasEnoughDataPoints()) {

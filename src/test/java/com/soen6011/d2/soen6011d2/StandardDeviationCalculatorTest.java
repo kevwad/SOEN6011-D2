@@ -9,26 +9,29 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class StandardDeviationCalculatorTest {
 
+    private StandardDeviationCalculator calculator;
+
+    public StandardDeviationCalculatorTest() {
+        calculator = new StandardDeviationCalculator();
+    }
+
     @Test
     public void testPopulationStandardDeviation() {
-        StandardDeviationCalculator calculator = new StandardDeviationCalculator();
         calculator.addDataPoints(new double[]{2, 4, 4, 4, 5, 5, 7, 9});
-        double result = calculator.calculatePopulationStandardDeviation();
+        final double result = calculator.calculatePopulationStandardDeviation();
         assertEquals(2.0, result, 0.0001);
     }
 
     @Test
     public void testSampleStandardDeviation() {
-        StandardDeviationCalculator calculator = new StandardDeviationCalculator();
         calculator.addDataPoints(new double[]{2, 4, 4, 4, 5, 5, 7, 9});
-        double result = calculator.calculateSampleStandardDeviation();
+        final double result = calculator.calculateSampleStandardDeviation();
         assertEquals(2.1381, result, 0.0001);
     }
 
     @Test
     public void testEmptyDataset() {
         assertThrows(IllegalArgumentException.class, () -> {
-            StandardDeviationCalculator calculator = new StandardDeviationCalculator();
             calculator.calculatePopulationStandardDeviation();
         });
     }
@@ -36,7 +39,6 @@ class StandardDeviationCalculatorTest {
     @Test
     public void testSingleDataPoint() {
         assertThrows(IllegalArgumentException.class, () -> {
-            StandardDeviationCalculator calculator = new StandardDeviationCalculator();
             calculator.addDataPoint(5);
             calculator.calculateSampleStandardDeviation();
         });

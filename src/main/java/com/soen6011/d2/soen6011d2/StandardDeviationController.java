@@ -1,7 +1,5 @@
 package com.soen6011.d2.soen6011d2;
 
-import com.soen6011.d2.soen6011d2.util.I18N;
-
 import java.net.URL;
 import java.text.DecimalFormat;
 import javafx.fxml.FXML;
@@ -9,21 +7,19 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class StandardDeviationController implements Initializable {
 
-    private static final DecimalFormat decimalFormatter = new DecimalFormat("0.00");
+    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("0.00");
 
     private StandardDeviationCalculator calculator;
 
     @FXML
-    private Label invalidDataPointLabel;
+    private Label invalidDPLabel;
 
     @FXML
     private TextField inputField;
@@ -35,10 +31,10 @@ public class StandardDeviationController implements Initializable {
     private Button clearButton;
 
     @FXML
-    private Button addDataPointButton;
+    private Button addDPButton;
 
     @FXML
-    private Label populationStdDevLabel;
+    private Label stdDevLabel;
 
     @FXML
     private Label dataPointsLabel;
@@ -55,8 +51,8 @@ public class StandardDeviationController implements Initializable {
      * @param resourceBundle
      */
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        populationStdDevLabel.setVisible(false);
+    public void initialize(final URL url, final ResourceBundle resourceBundle) {
+        stdDevLabel.setVisible(false);
         sampleStdDevLabel.setVisible(false);
     }
 
@@ -65,33 +61,33 @@ public class StandardDeviationController implements Initializable {
      */
     @FXML
     protected void onAddDataPointClick() {
-        invalidDataPointLabel.setVisible(true);
+        invalidDPLabel.setVisible(true);
 
-        String currentValue = inputField.getText();
+        final String currentValue = inputField.getText();
         if (currentValue.isEmpty()) {
-            invalidDataPointLabel.setVisible(true);
+            invalidDPLabel.setVisible(true);
         }
         try {
-            double currentDoubleValue = Double.parseDouble(currentValue);
-            calculator.addDataPoint(currentDoubleValue);
-            invalidDataPointLabel.setText("[" + currentValue + "] has been added to the data points");
+            final double currentDouble = Double.parseDouble(currentValue);
+            calculator.addDataPoint(currentDouble);
+            invalidDPLabel.setText("[" + currentValue + "] has been added to the data points");
             updateCurrentPoints();
         } catch (NumberFormatException exception) {
 
-            String[] commaSeparated = currentValue.split(", ");
-            List<Double> convertedRankList = new ArrayList<Double>();
+            final String[] commaSeparated = currentValue.split(", ");
+            final List<Double> convertedRankList = new ArrayList<>();
             try {
-                for (String number : commaSeparated) {
+                for (final String number : commaSeparated) {
                     convertedRankList.add(Double.parseDouble(number));
                 }
 
-                double[] dataPoints = convertedRankList.stream().mapToDouble(d -> d).toArray();
+                final double[] dataPoints = convertedRankList.stream().mapToDouble(d -> d).toArray();
                 calculator.addDataPoints(dataPoints);
-                invalidDataPointLabel.setText("[" + currentValue + "] has been added to the data points");
+                invalidDPLabel.setText("[" + currentValue + "] has been added to the data points");
                 updateCurrentPoints();
             } catch (NumberFormatException exception2) {
-                invalidDataPointLabel.setText("Please enter a valid Data Point (numerical values)!");
-                invalidDataPointLabel.setVisible(true);
+                invalidDPLabel.setText("Please enter a valid Data Point (numerical values)!");
+                invalidDPLabel.setVisible(true);
             }
         }
         inputField.clear();
@@ -103,8 +99,8 @@ public class StandardDeviationController implements Initializable {
     @FXML
     protected void onClearDataPointClick() {
         calculator.clearData();
-        invalidDataPointLabel.setVisible(false);
-        populationStdDevLabel.setVisible(false);
+        invalidDPLabel.setVisible(false);
+        stdDevLabel.setVisible(false);
         sampleStdDevLabel.setVisible(false);
         updateCurrentPoints();
     }
@@ -127,19 +123,19 @@ public class StandardDeviationController implements Initializable {
     protected void onSubmitDataPoints() {
         if (!calculator.hasEnoughDataPoints()) {
             System.out.println("Kevin: Not enough data points yet");
-            invalidDataPointLabel.setVisible(true);
-            invalidDataPointLabel.setText("Minimum 2 data points required.");
+            invalidDPLabel.setVisible(true);
+            invalidDPLabel.setText("Minimum 2 data points required.");
             return;
         }
 
-        invalidDataPointLabel.setVisible(false);
-        populationStdDevLabel.setVisible(true);
+        invalidDPLabel.setVisible(false);
+        stdDevLabel.setVisible(true);
         sampleStdDevLabel.setVisible(true);
 
-        double popularStdDev = calculator.calculatePopulationStandardDeviation();
-        double sampleStdDev = calculator.calculateSampleStandardDeviation();
+        final double popularStdDev = calculator.calculatePopulationStandardDeviation();
+        final double sampleStdDev = calculator.calculateSampleStandardDeviation();
 
-        populationStdDevLabel.setText("Population Standard Deviation is: " + decimalFormatter.format(popularStdDev));
-        sampleStdDevLabel.setText("Sample Standard Deviation is: " + decimalFormatter.format(sampleStdDev));
+        stdDevLabel.setText("Population Standard Deviation is: " + DECIMAL_FORMAT.format(popularStdDev));
+        sampleStdDevLabel.setText("Sample Standard Deviation is: " + DECIMAL_FORMAT.format(sampleStdDev));
     }
 }

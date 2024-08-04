@@ -42,10 +42,10 @@
       <Insets bottom="10" left="10" right="10" top="10" />
     </padding>
     <TextField fx:id="inputField" minWidth="150" maxWidth="150"/>
-    <Button text="%button.add" fx:id="addDataPointButton" onAction="#onAddDataPointClick"/>
+    <Button text="%button.add" fx:id="addDPButton" onAction="#onAddDataPointClick"/>
   </HBox>
 
-  <Label fx:id="invalidDataPointLabel" text="%label.invalidDataPoint" textFill="#f80000" visible="false" wrapText="true">
+  <Label fx:id="invalidDPLabel" text="%label.invalidDataPoint" textFill="#f80000" visible="false" wrapText="true">
     <padding>
       <Insets bottom="10" left="10" right="10" top="10" />
     </padding>
@@ -75,7 +75,7 @@
       <Insets bottom="20" left="10" right="10" top="20" />
     </padding>
 
-    <Label fx:id="populationStdDevLabel" text="Population Standard Deviation:">
+    <Label fx:id="stdDevLabel" text="Population Standard Deviation:">
       <font>
         <Font name="Arial" size="14.0" />
       </font>

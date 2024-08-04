@@ -21,7 +21,7 @@ public class StandardDeviationCalculator {
      * Adds the value to the private list
      * @param value value to be added
      */
-    public void addDataPoint(double value) {
+    public void addDataPoint(final double value) {
         dataPoints.add(value);
     }
 
@@ -29,8 +29,8 @@ public class StandardDeviationCalculator {
      * adds a list of data points to the private list
      * @param values set of data points to be added
      */
-    public void addDataPoints(double[] values) {
-        for (double value : values) {
+    public void addDataPoints(final double[] values) {
+        for (final double value : values) {
             dataPoints.add(value);
         }
     }
@@ -53,21 +53,22 @@ public class StandardDeviationCalculator {
      * @return Generates the list of comma separated data points.
      */
     public String currentDataPoints() {
-        if (dataPoints.isEmpty()) {
-            return "-";
-        } else {
-            StringBuilder dpString = new StringBuilder();
-            DecimalFormat decimalFormatter = new DecimalFormat("0.00");
+        String asString = "-";
+        if (!dataPoints.isEmpty()) {
+            final StringBuilder dpString = new StringBuilder();
+            final DecimalFormat decimalFormatter = new DecimalFormat("0.00");
             int index = 0;
-            for (double dataPoint: dataPoints) {
+            for (final double dataPoint: dataPoints) {
                 dpString.append(decimalFormatter.format(dataPoint));
                 if (index != dataPoints.size() - 1) {
                     dpString.append(',');
                 }
                 index++;
             }
-            return dpString.toString();
+            asString = dpString.toString();
         }
+
+        return asString;
     }
 
     /**
@@ -77,12 +78,12 @@ public class StandardDeviationCalculator {
         if (dataPoints.isEmpty()) {
             throw new IllegalArgumentException("Dataset is empty.");
         }
-        double mean = calculateMean();
-        double sumOfSquaredDeviations = 0.0;
-        for (double value : dataPoints) {
-            sumOfSquaredDeviations += Math.pow(value - mean, 2);
+        final double mean = calculateMean();
+        double squaredDeviations = 0.0;
+        for (final double value : dataPoints) {
+            squaredDeviations += Math.pow(value - mean, 2);
         }
-        return Math.sqrt(sumOfSquaredDeviations / dataPoints.size());
+        return Math.sqrt(squaredDeviations / dataPoints.size());
     }
 
     /**
@@ -93,12 +94,12 @@ public class StandardDeviationCalculator {
         if (dataPoints.size() < 2) {
             throw new IllegalArgumentException("Dataset must contain at least two data points.");
         }
-        double mean = calculateMean();
-        double sumOfSquaredDeviations = 0.0;
-        for (double value : dataPoints) {
-            sumOfSquaredDeviations += Math.pow(value - mean, 2);
+        final double mean = calculateMean();
+        double squaredDeviations = 0.0;
+        for (final double value : dataPoints) {
+            squaredDeviations += Math.pow(value - mean, 2);
         }
-        return Math.sqrt(sumOfSquaredDeviations / (dataPoints.size() - 1));
+        return Math.sqrt(squaredDeviations / (dataPoints.size() - 1));
     }
 
     /**
@@ -114,7 +115,7 @@ public class StandardDeviationCalculator {
      */
     private double calculateMean() {
         double sum = 0.0;
-        for (double value : dataPoints) {
+        for (final double value : dataPoints) {
             sum += value;
         }
         return sum / dataPoints.size();

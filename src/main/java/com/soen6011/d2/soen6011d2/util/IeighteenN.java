@@ -18,14 +18,14 @@ import java.util.concurrent.Callable;
  * I18N utility class. This file is modified based from https://www.sothawo.com/2016/09/how-to-implement-a-javafx-ui-where-the-language-can-be-changed-dynamically/
  *
  */
-public final class I18N {
+public final class IeighteenN {
 
     /** the current selected Locale. */
-    private static final ObjectProperty<Locale> locale;
+    private static final ObjectProperty<Locale> LOCALE;
 
     static {
-        locale = new SimpleObjectProperty<>(getDefaultLocale());
-        locale.addListener((observable, oldValue, newValue) -> Locale.setDefault(newValue));
+        LOCALE = new SimpleObjectProperty<>(getDefaultLocale());
+        LOCALE.addListener((observable, oldValue, newValue) -> Locale.setDefault(newValue));
     }
 
     /**
@@ -43,21 +43,21 @@ public final class I18N {
      * @return
      */
     public static Locale getDefaultLocale() {
-        Locale sysDefault = Locale.getDefault();
+        final Locale sysDefault = Locale.getDefault();
         return getSupportedLocales().contains(sysDefault) ? sysDefault : Locale.ENGLISH;
     }
 
     public static Locale getLocale() {
-        return locale.get();
+        return LOCALE.get();
     }
 
-    public static void setLocale(Locale locale) {
+    public static void setLocale(final Locale locale) {
         localeProperty().set(locale);
         Locale.setDefault(locale);
     }
 
     public static ObjectProperty<Locale> localeProperty() {
-        return locale;
+        return LOCALE;
     }
 
     /**
@@ -71,7 +71,7 @@ public final class I18N {
      * @return localized formatted string
      */
     public static String get(final String key, final Object... args) {
-        ResourceBundle bundle = ResourceBundle.getBundle("com.soen6011.d2.soen6011d2.i18n", getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("com.soen6011.d2.soen6011d2.i18n", getLocale());
         return MessageFormat.format(bundle.getString(key), args);
     }
 
@@ -82,8 +82,8 @@ public final class I18N {
      *         key
      * @return String binding
      */
-    public static StringBinding createStringBinding(final String key, Object... args) {
-        return Bindings.createStringBinding(() -> get(key, args), locale);
+    public static StringBinding createStringBinding(final String key, final Object... args) {
+        return Bindings.createStringBinding(() -> get(key, args), LOCALE);
     }
 
     /**
@@ -93,8 +93,8 @@ public final class I18N {
      *         function called on every change
      * @return StringBinding
      */
-    public static StringBinding createStringBinding(Callable<String> func) {
-        return Bindings.createStringBinding(func, locale);
+    public static StringBinding createStringBinding(final Callable<String> func) {
+        return Bindings.createStringBinding(func, LOCALE);
     }
 
     /**
@@ -104,8 +104,8 @@ public final class I18N {
      *         the function to compute the value
      * @return Label
      */
-    public static Label labelForValue(Callable<String> func) {
-        Label label = new Label();
+    public static Label labelForValue(final Callable<String> func) {
+        final Label label = new Label();
         label.textProperty().bind(createStringBinding(func));
         return label;
     }
@@ -120,7 +120,7 @@ public final class I18N {
      * @return Button
      */
     public static Button buttonForKey(final String key, final Object... args) {
-        Button button = new Button();
+        final Button button = new Button();
         button.textProperty().bind(createStringBinding(key, args));
         return button;
     }
